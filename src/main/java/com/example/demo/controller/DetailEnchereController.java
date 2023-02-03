@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.model.DetailEnchere;
-import com.example.demo.model.Historique;
 import com.example.demo.repository.DetailEnchereRepository;
 import com.example.demo.response.Succes;
 
