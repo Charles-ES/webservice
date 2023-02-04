@@ -11,7 +11,7 @@ public interface EnchereRepository extends JpaRepository<Enchere,Long>{
 
     List<Enchere> findByIdetat(Long idetat);
     List<Enchere> findByIdclient(Long idclient);
-    Enchere findByIdClientAndNomProduitAndPrixDepartAndIdCategorieAndDateHeureDebutAndDateHeureFinAndDescription(
+    Enchere findByIdclientAndNomproduitAndPrixdepartAndIdcategorieAndDateheuredebutAndDateheurefinAndDescription(
             Long idclient, String nomproduit, double prixdepart, Long idcategorie, Timestamp dateheuredebut,
             Timestamp dateheurefin, String description);
 }
