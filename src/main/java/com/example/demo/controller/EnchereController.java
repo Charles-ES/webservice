@@ -97,7 +97,7 @@ public class EnchereController {
             
             for (Object data : datas) {
                Photo p = new Photo();
-               Enchere e = enchereRepository.findByIdClientAndNomProduitAndPrixDepartAndIdCategorieAndDateHeureDebutAndDateHeureFinAndDescription(enchere.getIdclient(), enchere.getNomproduit(), enchere.getPrixdepart(), enchere.getIdcategorie(), enchere.getDateheuredebut(), enchere.getDateheurefin(), enchere.getDescription());
+               Enchere e = enchereRepository.findByIdclientAndNomproduitAndPrixdepartAndIdcategorieAndDateheuredebutAndDateheurefinAndDescription(enchere.getIdclient(), enchere.getNomproduit(), enchere.getPrixdepart(), enchere.getIdcategorie(), enchere.getDateheuredebut(), enchere.getDateheurefin(), enchere.getDescription());
                p.setBase64image(data.toString());
                p.setIdenchere(e.getId());
                 photoRepository.save(p);
