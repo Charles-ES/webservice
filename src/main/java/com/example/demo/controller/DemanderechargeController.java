@@ -34,6 +34,46 @@ public class DemanderechargeController {
     @Autowired
     private EtatRepository etatRepository;
 
+
+    @PostMapping("/compte/recharger")
+    public ResponseEntity recharger(@RequestBody Object object) throws Exception {
+
+        ResponseEntity responseentity = null;
+
+        LinkedHashMap linkedHashMap = (LinkedHashMap) object;
+        String token = linkedHashMap.get("token").toString();
+        String montant = linkedHashMap.get("montant").toString();
+
+        Token tokenObject = new Token();
+        tokenObject = tokenRepository.findByValueAndExpirationdateIsNull(token);
+        if (tokenObject != null) {
+            Demanderecharge demanderecharge = new Demanderecharge();
+            demanderecharge.setIdclient(tokenObject.getTableid());
+            demanderecharge.setMontant(Double.parseDouble(montant));
+
+            Etat etat = new Etat();
+            etat = etatRepository.findByType("non valide");
+            demanderecharge.setIdetat(etat.getId());
+            demanderecharge.setDatedemanderecharge(new Date(System.currentTimeMillis()));
+            demanderechargeRepository.save(demanderecharge);
+
+            Succes succes = new Succes();
+            HashMap message = new HashMap();
+            message.put("message", "Compte rechargé avec Succès !");
+            succes.setData(message);
+            responseentity = new ResponseEntity(succes, HttpStatus.OK);
+        } else {
+            Error error = new Error();
+            HashMap codeerror = new HashMap();
+            codeerror.put("code", 0);
+            codeerror.put("etat", "disconnected");
+            error.setError(codeerror);
+            responseentity = new ResponseEntity(error, HttpStatus.OK);
+        }
+        return responseentity;
+
+    }
+
     @PostMapping("/compte/recharger1")
     public ResponseEntity Recharger(@RequestBody Object object) throws Exception {
 

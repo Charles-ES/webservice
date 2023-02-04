@@ -149,6 +149,39 @@ public class ClientController {
     }
 
 
-    
+    @PostMapping("/client/register")
+    public ResponseEntity register(@RequestBody Client client) throws Exception {
+
+        Client temp = client;
+        client = clientRepository.findByTelephoneAndMotdepasse(client.getTelephone(),
+                Token.sha1(client.getMotdepasse()));
+
+        ResponseEntity responseentity = null;
+
+        if (client == null) {
+            temp.setMotdepasse(Token.sha1(temp.getMotdepasse()));
+            clientRepository.save(temp);
+            Succes succes = new Succes();
+
+            HashMap succesdata = new HashMap();
+            succesdata.put("message", "Client Inscrit avec Succès !");
+
+            succes.setData(succesdata);
+            responseentity = new ResponseEntity(succes, HttpStatus.OK);
+            return responseentity;
+        }
+
+        Error error = new Error();
+
+        HashMap errordata = new HashMap();
+        errordata.put("message", "user already exists");
+
+        error.setError(errordata);
+        errordata = null;
+
+        responseentity = new ResponseEntity(error, HttpStatus.OK);
+        return responseentity;
+
+    }
 
 }

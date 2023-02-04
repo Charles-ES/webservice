@@ -41,4 +41,8 @@ public class Enchere {
 
     @Column(name = "idetat")
     Long idetat;
+
+    
+    @Column(name = "description")
+    private String description;
 }
